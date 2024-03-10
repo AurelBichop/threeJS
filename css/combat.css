@@ -1,0 +1,27 @@
+:root{
+    --margin-img-LR: 20px;
+}
+
+.personnages{
+    display: flex;
+}
+
+.reverse-personnage{
+    flex-direction: row-reverse;
+}
+
+.personnage{
+    width: 50%;
+}
+
+.personnage img{
+    width: calc(100% - (var(--margin-img-LR) * 2));
+    object-fit: cover;
+    border-radius: 100%;
+    border: 2px solid red;
+    margin: 0 var(--margin-img-LR);
+}
+
+.luke img{
+    border: 2px solid greenyellow;
+}

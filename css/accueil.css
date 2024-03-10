@@ -1,0 +1,138 @@
+form{
+    margin: 40px 0px;
+    border-top: 2px solid white;
+    padding-top: 20px;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 200ms;
+    transform: translateY(-100px);
+}
+
+form label{
+    width: 20%;
+    min-width: 100px;
+}
+
+form button{
+    color: white;
+    background-color: black;
+    border: 2px white solid;
+    padding: 10px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 20px;
+    cursor:pointer;
+    transition: 200ms;
+}
+
+.champs{
+    width: 100%;
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.champs input{
+    width: 80%;
+    outline: none;
+    color: white;
+    background-color: black;
+    border: 2px white solid;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.personnages{
+    display: flex;
+    width: 100%;
+}
+
+.personnages img{
+    object-fit: contain;
+    width: 100%;
+}
+
+.personnage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.personnage button{
+    margin-top: 20px;
+    padding: 10px;
+    width: 200px;
+    background-color: black;
+    color: antiquewhite;
+    border: 2px red solid;
+    border-radius: 15px;
+    transition: 250ms;
+    cursor: pointer;
+}
+
+.luke{
+    position: relative;
+    animation-name: moveFromRight; 
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    animation-timing-function: cubic-bezier(.85,0.84,.43);
+    animation-direction: normal;
+    right: -100%;
+}
+
+.luke button{
+    border-color: green;
+}
+
+.vador{
+    position: relative;
+    animation-name: moveFromLeft; 
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+    animation-timing-function: cubic-bezier(.85,0.84,.43);
+    animation-direction: normal;
+    left: -100%;
+}
+
+@media(max-width: 560px){
+    .personnages{
+        flex-direction: column;
+    }
+    .personnage{
+        width: 100%;
+    }
+    .luke{
+        margin: 30px 0px;
+    }
+    form button{
+        width: 250px;
+    }
+}
+
+@keyframes moveFromLeft{
+    0%{
+        left: -100%;
+    }
+
+    100%{
+        left: 0px;
+    }
+}
+
+@keyframes moveFromRight{
+    0%{
+        right: -100%;
+    }
+
+    100%{
+        right: 0px;
+    }
+}
