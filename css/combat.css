@@ -1,5 +1,6 @@
 :root{
     --margin-img-LR: 20px;
+    --padding-vie: 6px;
 }
 
 .personnages{
@@ -24,4 +25,25 @@
 
 .luke img{
     border: 2px solid greenyellow;
+}
+
+.total-vie{
+    width: calc(100% - (var(--margin-img-LR) * 2));
+    height: 20px;
+    background-color: black;
+    border: 2px solid whitesmoke;
+    border-radius: 20px;
+    margin: 0 var(--margin-img-LR);
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.vie{
+    margin-left: calc(var(--padding-vie) / 2);
+    height: calc(100% - var(--padding-vie));
+    width: calc(100% - var(--padding-vie));
+    background-color: rgb(117, 0, 0);
+    border-radius: 20px;
 }
