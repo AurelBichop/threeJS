@@ -1,18 +1,21 @@
-class Personnage {
+export default class Personnage {
     constructor(
         pointDeVie, 
         attaques,
-        nombreAttaquesDispo,
+        energie,
         nom,
-        imageSource
+        imageSource,
+        estDuCoteObscure
     ){
         this.pointDeVie = pointDeVie;
         this.attaques = attaques;
-        this.nombreAttaquesDispo = nombreAttaquesDispo;
+        this.energie = energie;
         this.imageSource = imageSource;
+        this.estDuCoteObscure = estDuCoteObscure;
         
         this.creerHtmlBase(nom);
         this.creerHtmlVie();
+        this.creerHtmlAttaques();
     }
 
     creerHtmlBase(nom){
@@ -29,6 +32,7 @@ class Personnage {
     }
 
     creerHtmlVie(){
+        this.creerParagraphe("Vie restante");
         const vieTotal = document.createElement("div");
         vieTotal.classList.add("total-vie");
         this.divVie = document.createElement("div");
@@ -38,24 +42,27 @@ class Personnage {
         vieTotal.appendChild(this.divVie);
     }
 
+    creerHtmlAttaques(){
+        this.creerParagraphe("Mes attaques");
+        let classList;
+        if(this.estDuCoteObscure){
+            classList = ["red-illumination"];
+        }else{
+            classList = ["green-illumination"];
+        }
+        for(let attaque of this.attaques){
+            attaque.creerHtmlElement(this.divPersonnage, classList);
+        }
+    }
+    
     enleverDesPv(pointDeVie){
         this.pointDeVie = this.pointDeVie - pointDeVie;
         this.divVie.style.width = `calc(${this.pointDeVie}% - var(--padding-vie))`;
     }
+
+    creerParagraphe(text){
+        const paragraphe = document.createElement("p");
+        paragraphe.textContent = text;
+        this.divPersonnage.appendChild(paragraphe);
+    }
 }
-
-const luke = new Personnage(
-    100,
-    [],
-    10,
-    "luke",
-    "assets/luke.jpg"
-);
-
-const vador = new Personnage(
-    150,
-    [],
-    7,
-    "vador",
-    "assets/dark_vador.jpg"
-);
