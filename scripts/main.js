@@ -27,6 +27,8 @@ const onClickButton = (button)=>{
         submitButton.classList.add("red-illumination");
         disabledHtmlElement(luke);
     }
+
+    localStorage.setItem("jediChoisi", button.value)
 }
 
 const goToFightPage = () => {

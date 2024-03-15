@@ -1,21 +1,25 @@
 export default class Personnage {
     constructor(
         pointDeVie, 
-        attaques,
         energie,
         nom,
         imageSource,
-        estDuCoteObscure
+        estDuCoteObscure,
+        jeu,
+        attaques,
+        estLePersoChoisi,
     ){
         this.pointDeVie = pointDeVie;
-        this.attaques = attaques;
         this.energie = energie;
         this.imageSource = imageSource;
         this.estDuCoteObscure = estDuCoteObscure;
-        
+        this.jeu = jeu;
+        this.attaques = attaques;
+        this.estLePersoChoisi = estLePersoChoisi;
+
         this.creerHtmlBase(nom);
         this.creerHtmlVie();
-        this.creerHtmlAttaques();
+        this.creerAttaques();
     }
 
     creerHtmlBase(nom){
@@ -42,19 +46,29 @@ export default class Personnage {
         vieTotal.appendChild(this.divVie);
     }
 
-    creerHtmlAttaques(){
-        this.creerParagraphe("Mes attaques");
-        let classList;
-        if(this.estDuCoteObscure){
-            classList = ["red-illumination"];
-        }else{
-            classList = ["green-illumination"];
-        }
-        for(let attaque of this.attaques){
-            attaque.creerHtmlElement(this.divPersonnage, classList);
+    creerAttaques(){
+
+        if(this.estLePersoChoisi){
+            this.creerParagraphe("Mes attaques");
+
+            let classList;
+            if(this.estDuCoteObscure){
+                classList = ["red-illumination"];
+            }else{
+                classList = ["green-illumination"];
+            }
+
+            for(let attaque of this.attaques){
+                attaque.creerHtmlElement(this.divPersonnage, classList);
+            }
+            this.divPersonnage.classList.add('first');
         }
     }
     
+    attaquerEnnemi(attaqueChoisi){
+        this.jeu.ennemi.enleverDesPv(attaqueChoisi.degat);
+    }
+
     enleverDesPv(pointDeVie){
         this.pointDeVie = this.pointDeVie - pointDeVie;
         this.divVie.style.width = `calc(${this.pointDeVie}% - var(--padding-vie))`;

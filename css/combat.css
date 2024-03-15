@@ -7,15 +7,15 @@
     display: flex;
 }
 
-.reverse-personnage{
-    flex-direction: row-reverse;
-}
-
 .personnage{
     width: 50%;
     display: flex;
     flex-direction: column;
+    order: 2;
+}
 
+.first{
+    order: 1;
 }
 
 .personnage img{
