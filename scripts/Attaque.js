@@ -20,6 +20,22 @@ export default class Attaque{
     }
 
     onClickOnButton(){
-        this.jeu.personnage.attaquerEnnemi(this);
+        this.jeu.personnage.attaquerPersonnage(this);
+        this.desactiverTousLesBoutons();
+        setTimeout(()=> {
+            this.jeu.ennemi.attaquerPersonnage(this.activerTousLesBoutons.bind(this));
+        }, 1000)
+    }
+
+    desactiverTousLesBoutons(){
+        for(let attaque of this.jeu.personnage.attaques){
+            attaque.button.classList.add("disabled-but-visible");
+        }      
+    }
+
+    activerTousLesBoutons(){
+        for(let attaque of this.jeu.personnage.attaques){
+            attaque.button.classList.remove("disabled-but-visible");
+        }  
     }
 }

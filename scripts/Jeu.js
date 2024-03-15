@@ -1,5 +1,8 @@
-import Personnage from "./Personnage.js";
 import Attaque from "./Attaque.js";
+import Personnage from "./Personnage.js";
+import Ennemi from "./Ennemi.js";
+
+
 
 export default class Jeu {
     
@@ -20,7 +23,8 @@ export default class Jeu {
     }
 
     createLuke(estLePersoChoisi){
-        const luke = new Personnage(
+        let typePersonnage = estLePersoChoisi ? Personnage : Ennemi;
+        const luke = new typePersonnage(
             100,
             200,
             "luke",
@@ -39,7 +43,8 @@ export default class Jeu {
     }
 
     createVador(estLePersoChoisi){
-        const vador =  new Personnage(
+        let typePersonnage = estLePersoChoisi ? Personnage : Ennemi;
+        const vador =  new typePersonnage(
             150,
             150,
             "vador",

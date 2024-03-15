@@ -10,12 +10,14 @@ export default class Personnage {
         estLePersoChoisi,
     ){
         this.pointDeVie = pointDeVie;
+        this.initPointDevies = pointDeVie;
         this.energie = energie;
         this.imageSource = imageSource;
         this.estDuCoteObscure = estDuCoteObscure;
         this.jeu = jeu;
         this.attaques = attaques;
         this.estLePersoChoisi = estLePersoChoisi;
+        this.nom = nom,
 
         this.creerHtmlBase(nom);
         this.creerHtmlVie();
@@ -65,13 +67,14 @@ export default class Personnage {
         }
     }
     
-    attaquerEnnemi(attaqueChoisi){
+    attaquerPersonnage(attaqueChoisi){
         this.jeu.ennemi.enleverDesPv(attaqueChoisi.degat);
     }
 
     enleverDesPv(pointDeVie){
+        const factor = 100 / this.initPointDevies;
         this.pointDeVie = this.pointDeVie - pointDeVie;
-        this.divVie.style.width = `calc(${this.pointDeVie}% - var(--padding-vie))`;
+        this.divVie.style.width = `calc(${this.pointDeVie * factor}% - var(--padding-vie))`;
     }
 
     creerParagraphe(text){
