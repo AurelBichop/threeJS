@@ -50,6 +50,7 @@ form button{
 .personnages{
     display: flex;
     width: 100%;
+    justify-content: center;
 }
 
 .personnages img{

@@ -33,6 +33,9 @@ section{
     margin-left: 25%;
     /* height: calc(100vh - var(--margin-top-section) - var(--heigth-footer)); */
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 footer{
@@ -64,8 +67,7 @@ footer p{
 }
 
 .disabled{
-    opacity: 0;
-    pointer-events: none;
+    display: none !important;
 }
 
 .disabled-but-visible{

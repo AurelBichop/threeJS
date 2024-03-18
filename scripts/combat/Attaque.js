@@ -20,10 +20,16 @@ export default class Attaque{
     }
 
     onClickOnButton(){
-        this.jeu.personnage.attaquerPersonnage(this);
+        this.jeu.personnage.attaquerPersonnage(
+            "animation-attaque-left-right",
+            this
+        );
         this.desactiverTousLesBoutons();
         setTimeout(()=> {
-            this.jeu.ennemi.attaquerPersonnage(this.activerTousLesBoutons.bind(this));
+            this.jeu.ennemi.attaquerPersonnage(
+                "animation-attaque-left-right",
+                this.activerTousLesBoutons.bind(this)
+            );
         }, 1000)
     }
 

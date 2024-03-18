@@ -1,5 +1,5 @@
 import Personnage from "./Personnage.js";
-import { capitalize } from "./utils.js";
+import { capitalize } from "../utils.js";
 
 export default class Ennemi extends Personnage{
 constructor(
@@ -30,14 +30,23 @@ constructor(
         return this.attaques[rand];
     }
     
-    attaquerPersonnage(callback){
-        const attaqueSlectionnee = this.selectionnerUneAttaque();
-        this.jeu.personnage.enleverDesPv(attaqueSlectionnee.degat);
-        this.createInfoBox(attaqueSlectionnee);
-        setTimeout(() => {
-            this.finAttaque(),
-            callback() 
-        }, 2000);
+    attaquerPersonnage(animationName,callback){
+        if(this.pointDeVie > 0){     
+            const attaqueSlectionnee = this.selectionnerUneAttaque();
+            this.ajouteAnimationAttaque(animationName);
+            this.jeu.personnage.enleverDesPv(attaqueSlectionnee.degat);
+            this.createInfoBox(attaqueSlectionnee);
+            setTimeout(() => {
+                this.finAttaque();
+                if(this.jeu.personnage.pointDeVie > 0){
+                    callback();
+                }else{
+                    this.gagne();
+                }
+            }, 2000);
+        }else{
+            this.jeu.personnage.gagne();
+        }
     }
 
     finAttaque(){
@@ -48,5 +57,14 @@ constructor(
         this.pNomAttaque = document.createElement("p");
         this.pNomAttaque.textContent = `${capitalize(this.jeu.ennemi.nom)} attaque ${capitalize(this.jeu.personnage.nom)} avec ${attaqueSlectionnee.nom}`;
         this.divPersonnage.appendChild(this.pNomAttaque);
+    }
+
+    ajouteAnimationAttaque(){
+        this.divPersonnage.classList.add("animation-attaque-right-left");
+    }
+
+
+    enleveAnimationAttaque(){
+        this.divPersonnage.classList.remove("animation-attaque-right-left");
     }
 }

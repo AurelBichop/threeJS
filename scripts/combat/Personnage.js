@@ -1,3 +1,5 @@
+import { capitalize } from "../utils.js";
+
 export default class Personnage {
     constructor(
         pointDeVie, 
@@ -28,12 +30,24 @@ export default class Personnage {
         this.divPersonnage = document.createElement("div");
         this.divPersonnage.classList.add("personnage");
         this.divPersonnage.classList.add(nom);
-        const img = document.createElement("img");
-        img.src = this.imageSource;
-        img.alt = nom;
 
         const divPersonnages = document.querySelector(".personnages");
         divPersonnages.appendChild(this.divPersonnage);
+
+        if(this.estLePersoChoisi){
+            const pseudo = document.createElement("p");
+            pseudo.textContent = localStorage.getItem("pseudo");
+            pseudo.classList.add("pseudo");
+            this.divPersonnage.appendChild(pseudo);
+        }else{
+            const div = document.createElement("div");
+            div.classList.add("espace");
+            this.divPersonnage.appendChild(div);
+        }
+
+        const img = document.createElement("img");
+        img.src = this.imageSource;
+        img.alt = nom;
         this.divPersonnage.appendChild(img);
     }
 
@@ -67,8 +81,13 @@ export default class Personnage {
         }
     }
     
-    attaquerPersonnage(attaqueChoisi){
-        this.jeu.ennemi.enleverDesPv(attaqueChoisi.degat);
+    attaquerPersonnage(animationName,attaqueChoisi){
+        if(this.pointDeVie > 0){
+            this.ajouteAnimationAttaque(animationName);
+            this.jeu.ennemi.enleverDesPv(attaqueChoisi.degat);
+        }else{
+            this.jeu.ennemi.gagne();
+        }
     }
 
     enleverDesPv(pointDeVie){
@@ -81,5 +100,36 @@ export default class Personnage {
         const paragraphe = document.createElement("p");
         paragraphe.textContent = text;
         this.divPersonnage.appendChild(paragraphe);
+    }
+
+    ajouteAnimationAttaque(animationName){
+        this.divPersonnage.classList.add(animationName);
+
+        let duration = getComputedStyle(
+            document.body
+            ).getPropertyValue("--duration-animation-attaque");
+
+        duration = duration.replace("ms","");
+        duration = parseInt(duration);
+
+        setTimeout(()=>{
+            this.enleveAnimationAttaque(animationName)
+            
+        },duration)
+    
+    }
+
+
+    enleveAnimationAttaque(animationName){
+        this.divPersonnage.classList.remove(animationName);
+    }
+
+    gagne(){
+        const section = document.getElementsByTagName("section")[0];
+        
+        const p = document.createElement("p");
+        p.textContent = `${capitalize(this.nom)} a gagné !`;
+
+        section.appendChild(p);
     }
 }
