@@ -58,13 +58,4 @@ constructor(
         this.pNomAttaque.textContent = `${capitalize(this.jeu.ennemi.nom)} attaque ${capitalize(this.jeu.personnage.nom)} avec ${attaqueSlectionnee.nom}`;
         this.divPersonnage.appendChild(this.pNomAttaque);
     }
-
-    ajouteAnimationAttaque(){
-        this.divPersonnage.classList.add("animation-attaque-right-left");
-    }
-
-
-    enleveAnimationAttaque(){
-        this.divPersonnage.classList.remove("animation-attaque-right-left");
-    }
 }

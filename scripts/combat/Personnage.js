@@ -14,6 +14,7 @@ export default class Personnage {
         this.pointDeVie = pointDeVie;
         this.initPointDevies = pointDeVie;
         this.energie = energie;
+        this.initEnergie = energie;
         this.imageSource = imageSource;
         this.estDuCoteObscure = estDuCoteObscure;
         this.jeu = jeu;
@@ -23,6 +24,7 @@ export default class Personnage {
 
         this.creerHtmlBase(nom);
         this.creerHtmlVie();
+        this.creerHtmlEnergie();
         this.creerAttaques();
     }
 
@@ -54,12 +56,23 @@ export default class Personnage {
     creerHtmlVie(){
         this.creerParagraphe("Vie restante");
         const vieTotal = document.createElement("div");
-        vieTotal.classList.add("total-vie");
+        vieTotal.classList.add("total-bar");
         this.divVie = document.createElement("div");
         this.divVie.classList.add("vie");
-        
+        this.divVie.classList.add("niveau-bar");
         this.divPersonnage.appendChild(vieTotal);
         vieTotal.appendChild(this.divVie);
+    }
+
+    creerHtmlEnergie(){
+        this.creerParagraphe("Energie restante");
+        const energieTotal = document.createElement("div");
+        energieTotal.classList.add("total-bar");
+        this.divEnergie = document.createElement("div");
+        this.divEnergie.classList.add("energie");
+        this.divEnergie.classList.add("niveau-bar");
+        this.divPersonnage.appendChild(energieTotal);
+        energieTotal.appendChild(this.divEnergie);
     }
 
     creerAttaques(){
@@ -82,12 +95,25 @@ export default class Personnage {
     }
     
     attaquerPersonnage(animationName,attaqueChoisi){
-        if(this.pointDeVie > 0){
+        if(
+            this.pointDeVie > 0 &&
+            this.energie >= attaqueChoisi.energieNecessaire
+            ){
             this.ajouteAnimationAttaque(animationName);
             this.jeu.ennemi.enleverDesPv(attaqueChoisi.degat);
-        }else{
+            this.diminuerEnergie(attaqueChoisi.energieNecessaire)
+        }else if(this.pointDeVie > 0){
+            //to do PopUp
+        }
+        else{
             this.jeu.ennemi.gagne();
         }
+    }
+
+    diminuerEnergie(energieAttaque){
+        const factor = 100 / this.initEnergie;
+        this.energie = this.energie - energieAttaque;
+        this.divEnergie.style.width = `calc(${this.energie * factor}% - var(--padding-vie))`;
     }
 
     enleverDesPv(pointDeVie){
@@ -116,7 +142,6 @@ export default class Personnage {
             this.enleveAnimationAttaque(animationName)
             
         },duration)
-    
     }
 
 

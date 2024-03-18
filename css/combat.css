@@ -64,7 +64,7 @@
     border: 2px solid greenyellow;
 }
 
-.total-vie{
+.total-bar{
     width: calc(100% - (var(--margin-img-LR) * 2));
     height: 20px;
     background-color: black;
@@ -76,12 +76,19 @@
     justify-content: flex-start;
 }
 
-.vie{
+.niveau-bar{
     margin-left: calc(var(--padding-vie) / 2);
     height: calc(100% - var(--padding-vie));
     width: calc(100% - var(--padding-vie));
-    background-color: rgb(117, 0, 0);
     border-radius: 20px;
+}
+
+.vie{
+    background-color: rgb(117, 0, 0);
+}
+
+.energie{
+    background-color: rgb(0, 16, 110);
 }
 
 @media(max-width: 560px){
