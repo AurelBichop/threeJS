@@ -1,4 +1,5 @@
 import { capitalize } from "../utils.js";
+import PopUp from "./PopUp.js";
 
 export default class Personnage {
     constructor(
@@ -103,7 +104,10 @@ export default class Personnage {
             this.jeu.ennemi.enleverDesPv(attaqueChoisi.degat);
             this.diminuerEnergie(attaqueChoisi.energieNecessaire)
         }else if(this.pointDeVie > 0){
-            //to do PopUp
+            new PopUp(
+                "Tu n'a plus assez d'énergie pour effectuer cette attaque. Choisis-en une autre !",
+                () => {}
+            );
         }
         else{
             this.jeu.ennemi.gagne();
@@ -139,8 +143,7 @@ export default class Personnage {
         duration = parseInt(duration);
 
         setTimeout(()=>{
-            this.enleveAnimationAttaque(animationName)
-            
+            this.enleveAnimationAttaque(animationName)   
         },duration)
     }
 
