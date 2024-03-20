@@ -40,8 +40,15 @@ constructor(
             this.createInfoBox(attaqueSlectionnee);
             setTimeout(() => {
                 this.removeTextAttaque();
-                if(this.jeu.personnage.pointDeVie > 0){
+                if(this.jeu.personnage.pointDeVie > 0 &&
+                    this.jeu.personnage.energie >= this.jeu.personnage.energieMinimum
+                    ){
                     callback();
+                }else if(this.jeu.personnage.pointDeVie > 0 &&
+                    this.energie >= attaqueSlectionnee.energieNecessaire){
+                    this.attaquerPersonnage(animationName, callback);
+                }else if(this.jeu.personnage.getPointDeViePourcentage() > this.getPointDeViePourcentage()){
+                    this.jeu.personnage.gagne();                   
                 }else{
                     this.gagne();
                 }
