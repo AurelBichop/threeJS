@@ -21,7 +21,8 @@ export default class Personnage {
         this.jeu = jeu;
         this.attaques = attaques;
         this.estLePersoChoisi = estLePersoChoisi;
-        this.nom = nom,
+        this.nom = nom;
+        this.energieMinimum;
 
         this.creerHtmlBase(nom);
         this.creerHtmlVie();
@@ -90,12 +91,17 @@ export default class Personnage {
 
             for(let attaque of this.attaques){
                 attaque.creerHtmlElement(this.divPersonnage, classList);
+
+                if(!this.energieMinimum || this.energieMinimum > attaque.energieNecessaire)
+                {
+                    this.energieMinimum = attaque.energieNecessaire 
+                }
             }
             this.divPersonnage.classList.add('first');
         }
     }
     
-    attaquerPersonnage(animationName,attaqueChoisi){
+    attaquerPersonnage(animationName,attaqueChoisi,callback){
         if(
             this.pointDeVie > 0 &&
             this.energie >= attaqueChoisi.energieNecessaire
@@ -103,11 +109,15 @@ export default class Personnage {
             this.ajouteAnimationAttaque(animationName);
             this.jeu.ennemi.enleverDesPv(attaqueChoisi.degat);
             this.diminuerEnergie(attaqueChoisi.energieNecessaire)
-        }else if(this.pointDeVie > 0){
+            callback();
+        }else if(this.pointDeVie > 0 && this.energie >= this.energieMinimum){
             new PopUp(
                 "Tu n'a plus assez d'énergie pour effectuer cette attaque. Choisis-en une autre !",
                 () => {}
             );
+        }
+        else if(this.pointDeVie > 0){
+            callback();
         }
         else{
             this.jeu.ennemi.gagne();

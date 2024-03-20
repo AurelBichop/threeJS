@@ -31,31 +31,56 @@ constructor(
     }
     
     attaquerPersonnage(animationName,callback){
-        if(this.pointDeVie > 0){     
-            const attaqueSlectionnee = this.selectionnerUneAttaque();
+        const attaqueSlectionnee = this.selectionnerUneAttaque();
+
+        if(this.pointDeVie > 0 && this.energie >= attaqueSlectionnee.energieNecessaire){     
             this.ajouteAnimationAttaque(animationName);
             this.jeu.personnage.enleverDesPv(attaqueSlectionnee.degat);
+            this.diminuerEnergie(attaqueSlectionnee.energieNecessaire);
             this.createInfoBox(attaqueSlectionnee);
             setTimeout(() => {
-                this.finAttaque();
+                this.removeTextAttaque();
                 if(this.jeu.personnage.pointDeVie > 0){
                     callback();
                 }else{
                     this.gagne();
                 }
             }, 2000);
-        }else{
+        }else if(this.pointDeVie > 0 && this.energie >= this.energieMinimum){
+            this.attaquerPersonnage(animationName, callback);
+        }
+        else if(this.pointDeVie > 0){
+            this.createMessage("N'a pas assez d'énergie pour jouer.")
+            setTimeout(
+                () => {
+                    this.removeMessage();
+                    callback();
+                },               
+                2000
+            )
+        }
+        else{
             this.jeu.personnage.gagne();
         }
     }
 
-    finAttaque(){
+    removeTextAttaque(){
         this.divPersonnage.removeChild(this.pNomAttaque)
+    }
+
+    removeMessage(){
+        this.divPersonnage.removeChild(this.message)
     }
 
     createInfoBox(attaqueSlectionnee){
         this.pNomAttaque = document.createElement("p");
         this.pNomAttaque.textContent = `${capitalize(this.jeu.ennemi.nom)} attaque ${capitalize(this.jeu.personnage.nom)} avec ${attaqueSlectionnee.nom}`;
         this.divPersonnage.appendChild(this.pNomAttaque);
+    }
+
+    createMessage(message){
+        this.message = document.createElement("p");
+        this.message.textContent = message;
+        this.divPersonnage.appendChild(this.message)
     }
 }
