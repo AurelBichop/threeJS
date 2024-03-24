@@ -52,8 +52,8 @@ export default class Jeu {
             true,
             this,
             [
-                new Attaque("force",100,35,this),
-                new Attaque("envoyer son sabre",30,25,this),
+                new Attaque("force",55,25,this),
+                new Attaque("envoyer son sabre",15,20,this),
                 new Attaque('regard perçant',10,10,this)
             ],
             estLePersoChoisi
