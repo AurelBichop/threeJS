@@ -32,7 +32,7 @@ export default class Jeu {
             false,
             this,
             [
-                new Attaque("salto",50,50,this),
+                new Attaque("salto",70,40,this),
                 new Attaque("tourni",20,30,this),
                 new Attaque('pointe',10,10,this)
             ],
