@@ -31,7 +31,7 @@ section{
     margin-top: var(--margin-top-section);
     width: 50%;
     margin-left: 25%;
-    /* height: calc(100vh - var(--margin-top-section) - var(--heigth-footer)); */
+    height: calc(100vh - var(--margin-top-section) - var(--heigth-footer));
     position: relative;
     display: flex;
     flex-direction: column;
