@@ -3,12 +3,14 @@ import Personnage3D from './Personnage3D';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export default class Scene{
-    constructor(idCanvas, classDiv){
+    constructor(idCanvas, classDiv, linksGltfPersonnages){
         this.divCanvas = document.querySelector(classDiv);
-        
+        this.linksGltfPersonnages = linksGltfPersonnages;
+
         this.createScene();
         this.createCamera();
         this.createRenderer(idCanvas);
+        this.createControls();
         this.createObjects();
         this.createLigths();
         this.addEventOnResize();
@@ -26,6 +28,7 @@ export default class Scene{
         this.renderer = new THREE.WebGLRenderer({
             canvas: canvas
         });
+        
         this.setSizeRenderer();
         //document.body.appendChild( this.renderer.domElement );
     }
@@ -47,25 +50,35 @@ export default class Scene{
         return this.divCanvas.clientWidth / this.divCanvas.clientHeight;
     }
 
+    createControls(){
+        const controls = new OrbitControls( this.camera, this.renderer.domElement );
+        controls.target.set(0,2,0);
+        controls.update();
+    }
+
     createLigths(){
         const ambiantLight = new THREE.AmbientLight(0x2e2e2e);
         const light = new THREE.PointLight( 0xffffff, 1, 100 );
-        light.position.set( 2, 5, 2 );
+        light.position.set( 3, 5, 2);
         const light2 = new THREE.PointLight( 0xffffff, 1, 100 );
         light2.position.set( -5, 3, -5);
+        const light3 = new THREE.PointLight( 0xffffff, 1, 100 );
+        light3.position.set(0,1, 2);
         
+        const axesHelper = new THREE.AxesHelper( 5 );
+        this.scene.add( axesHelper );
         this.scene.add(light);
         this.scene.add(light2);
+        this.scene.add(light3);
         this.scene.add(ambiantLight);
+
     }
 
     createObjects(){
-        new Personnage3D(this.scene, '../../assets/gltf/luke_v05.gltf');
+        for (let link of this.linksGltfPersonnages){
+            new Personnage3D(this.scene, link);
+        } 
         
-        // const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        // const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-        // this.mesh = new THREE.Mesh( geometry, material );
-        // this.scene.add( this.mesh );
     }
 
     onResize(){
